@@ -3,3 +3,4 @@ uvicorn
 requests
 cachetools
 python-dotenv
+python-multipart
