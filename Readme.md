@@ -1,97 +1,92 @@
-# Public Safety AI System
+# KiwqSense
 
 ## Overview
 
-Our country needs to make public spaces safer. Can an AI-powered system, specifically leveraging the NVIDIA LLaMA Vision Model, effectively reduce the rate of crimes against women? This application utilizes advanced image analysis capabilities to identify potential threats in public areas and notify authorities through Telegram alerts.
+KiwqSense is an AI-powered system designed to enhance public safety by analyzing visual data for potential threats. Utilizing advanced models such as NVIDIA's LLaMA (Large Language Model Meta AI), KiwqSense aims to address the pressing issue of crime against women in public spaces. This innovative solution leverages the power of computer vision and natural language processing to provide real-time analysis and alerts.
+
+## Problem Statement
+
+Our country needs to make public spaces safer. Can an AI-powered system solve for reducing the rate of crimes against women? KiwqSense endeavors to answer this question by providing a proactive approach to threat detection and safety assessment.
 
 ## Features
 
-- **Image Analysis**: Uses the NVIDIA LLaMA Vision model to assess images for potential threats to public safety.
-- **Real-time Alerts**: Sends alerts to a specified Telegram channel with details and images when a dangerous situation is detected.
-- **Caching**: Implements a caching mechanism to optimize performance and avoid duplicate analyses.
-- **Environment Configuration**: Utilizes environment variables for sensitive data management.
+- **Image Analysis**: KiwqSense utilizes NVIDIA's LLaMA vision model to analyze images and detect potential threats in real-time.
+- **Telegram Alerts**: When a dangerous situation is detected, KiwqSense automatically sends alerts via Telegram, including relevant details and visual evidence.
+- **User-Friendly Interface**: The system is designed for easy interaction, allowing users to upload images for analysis and receive instant feedback.
 
-## Getting Started
+## Installation
 
 ### Prerequisites
 
-- Python 3.8 or higher
-- `pip` for installing packages
+- Python 3.7 or later
+- FastAPI
+- Required libraries:
+  - `requests`
+  - `pydantic`
+  - `dotenv`
+  - `cachetools`
+  - `langchain`
+  
+You can install the required libraries using pip:
 
-### Installation
+```bash
+pip install fastapi requests pydantic python-dotenv cachetools langchain
+```
 
-1. Clone this repository:
+### Setting Up Environment Variables
+
+Create a `.env` file in the root directory of the project with the following variables:
+
+```plaintext
+API_KEY=<Your_NVIDIA_API_Key>
+TELEGRAM_BOT_TOKEN=<Your_Telegram_Bot_Token>
+CHANNEL_ID=<Your_Telegram_Channel_ID>
+```
+
+## Usage
+
+1. **Start the FastAPI server**:
+
+   Run the following command in your terminal:
+
    ```bash
-   git clone https://github.com/yourusername/public-safety-ai.git
-   cd public-safety-ai
+   uvicorn main:app --reload
    ```
 
-2. Create a virtual environment and activate it:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-   ```
+2. **Upload an image for threat analysis**:
 
-3. Install the required packages:
-   ```bash
-   pip install -r requirements.txt
-   ```
+   Use the `/detect-threat/` endpoint to upload an image. The server will analyze the image and respond with the threat level and any relevant descriptions.
 
-4. Set up your environment variables. Create a `.env` file in the root directory of your project with the following content:
-   ```
-   API_KEY=your_nvidia_api_key
-   TELEGRAM_BOT_TOKEN=your_telegram_bot_token
-   CHANNEL_ID=your_telegram_channel_id
-   ```
+   Example using `curl`:
 
-### Usage
-
-1. **Run the FastAPI server**:
-   ```bash
-   uvicorn main:app --host 127.0.0.1 --port 8000
-   ```
-
-2. **Test the Telegram connection**:
-   Once the server is running, the console will indicate whether the Telegram setup is working correctly.
-
-3. **Send a request to analyze an image**:
-   You can use a tool like `curl`, Postman, or any HTTP client to test the endpoint. Here’s an example using `curl`:
    ```bash
    curl -X POST "http://127.0.0.1:8000/detect-threat/" -F "file=@path_to_your_image.jpg"
    ```
 
-### Endpoints
+3. **Receive Alerts**:
 
-- **POST /detect-threat/**: Analyzes the uploaded image for potential threats and sends alerts if necessary.
+   If a threat is detected, KiwqSense will send a notification to your specified Telegram channel, including the image and a description of the threat.
 
-### Response Format
+## How It Works
 
-- When a dangerous situation is detected:
-  ```json
-  {
-      "alert": "dangerous",
-      "description": "Detailed description of the threat.",
-      "telegram_alert_sent": true
-  }
-  ```
-
-- When no threat is detected:
-  ```json
-  {
-      "alert": "not dangerous"
-  }
-  ```
+1. **Image Upload**: Users upload images to the FastAPI application.
+2. **Threat Analysis**: The image is encoded and sent to the NVIDIA LLaMA vision model for analysis.
+3. **Response Handling**: Based on the analysis, KiwqSense determines if a threat exists and responds accordingly.
+4. **Alerting**: If a dangerous situation is detected, an alert is sent via Telegram with the relevant details.
 
 ## Contributing
 
-Contributions are welcome! Please fork this repository and submit a pull request for any improvements or features.
+We welcome contributions to enhance KiwqSense. Please fork the repository and submit a pull request with your improvements or bug fixes.
 
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-## Acknowledgements
+## Acknowledgments
 
-- **NVIDIA**: For providing the LLaMA Vision model which powers the threat detection capabilities.
-- **FastAPI**: For the fast and efficient framework used to build this application.
+- NVIDIA for the LLaMA model and its powerful capabilities.
+- FastAPI for providing a robust framework for building APIs.
+- The open-source community for their continuous support and contributions.
+
+
 
